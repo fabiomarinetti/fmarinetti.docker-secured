@@ -1,0 +1,5 @@
+---
+# vars file for fmarinetti.docker-secured
+#
+# states if certificates are taken from vault
+use_vault: false

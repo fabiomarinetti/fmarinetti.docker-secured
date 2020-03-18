@@ -1,0 +1,13 @@
+---
+# handlers file for fmarinetti.docker-secured
+#
+# reload units when configuration got changed
+- name: reload units
+  systemd:
+    daemon_reload: yes
+#
+# restart docker when configuration got changed  
+- name: restart docker
+  service:
+    name: docker
+    state: restarted

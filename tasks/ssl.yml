@@ -1,0 +1,47 @@
+---
+# create ssl directories
+- name: create ssl dirs
+  file:
+     path: "{{ item }}"
+     state: directory
+  with_items:
+     - "{{ cert_dir }}"
+     - "{{ key_dir }}"
+
+# deploy the server secret key from vault
+- name: copy server key
+  copy:
+     dest: "{{ key_dir }}/{{ server_key_file }}"
+     content: "{{ server_key }}"
+  when: use_vault
+
+# deploy the server certificate from vault
+- name: copy server cert
+  copy:
+     dest: "{{ cert_dir }}/{{ server_cert_file  }}"
+     content: "{{ server_cert }}"
+  when: use_vault
+
+# deploy the authority certificate from vault
+- name: copy ca.crt
+  copy:
+     dest: "{{ cert_dir }}/{{ ca_cert_file  }}"
+     content: "{{ ca_cert }}"
+  when: use_vault
+
+# deploy certificates from files
+- name: "copy certificate {{ item }}"
+  copy:
+    dest: "{{ cert_dir }}/{{ item }}"
+    src: "{{ item }}"
+  loop:
+    - ca.crt
+    - server.crt
+  when: not use_vault
+
+# deploy key from file
+- name: copy server key
+  copy:
+    dest: "{{ key_dir }}/server.key"
+    src: server.key
+  when: not use_vault

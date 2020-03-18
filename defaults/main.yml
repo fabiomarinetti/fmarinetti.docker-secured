@@ -1,0 +1,33 @@
+---
+# defaults file for fmarinetti.docker-secured
+#
+# ---------------------------------------------------
+# ssl section:
+# see https://docs.docker.com/engine/security/https/ 
+# ---------------------------------------------------
+#                                                                                                                       # the directory where ssl secret key are placed
+key_dir: /etc/ssl/private
+#
+# the directory where ssl certificates are placed
+cert_dir: /etc/ssl/certs/
+#
+# the name of the secret key file
+server_key_file: server.key
+#
+# the name of the server certificate file
+server_cert_file: server.crt
+#
+# the name of the CA certificate file
+ca_cert_file: ca.crt
+#
+# ---------------------------------------------------
+# docker configuration section
+# ---------------------------------------------------
+#
+# the server port where docker APIs are listening on
+docker_port: 2375
+
+# These variable are not actually used but they are taken from vault
+server_key:
+server_cert:
+ca_cert:

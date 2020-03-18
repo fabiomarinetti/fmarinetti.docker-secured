@@ -1,0 +1,7 @@
+---
+# tasks file for fmarinetti.docker-secured
+- name: deploy ssl configuration
+  include: ssl.yml
+
+- name: expose secure docker API
+  include: secure.yml

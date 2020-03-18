@@ -1,0 +1,8 @@
+---
+- name: deploy docker secured config
+  template:
+    dest: /etc/systemd/system/docker.service.d/override.conf
+    src: templates/secured.override.conf.j2
+  notify:
+    - reload units
+    - restart docker
