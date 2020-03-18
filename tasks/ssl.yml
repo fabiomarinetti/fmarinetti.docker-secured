@@ -9,21 +9,21 @@
      - "{{ key_dir }}"
 
 # deploy the server secret key from vault
-- name: copy server key
+- name: deploy server key from vault
   copy:
      dest: "{{ key_dir }}/{{ server_key_file }}"
      content: "{{ server_key }}"
   when: use_vault
 
 # deploy the server certificate from vault
-- name: copy server cert
+- name: deploy server cert from vault
   copy:
      dest: "{{ cert_dir }}/{{ server_cert_file  }}"
      content: "{{ server_cert }}"
   when: use_vault
 
 # deploy the authority certificate from vault
-- name: copy ca.crt
+- name: deploy ca.crt from vault
   copy:
      dest: "{{ cert_dir }}/{{ ca_cert_file  }}"
      content: "{{ ca_cert }}"
