@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/fabiomarinetti/docker-secured.svg?branch=master)](https://travis-ci.org/fabiomarinetti/docker-secured)
+[![Build Status](https://travis-ci.com/fabiomarinetti/fmarinetti.docker-secured.svg?branch=master)](https://travis-ci.com/fabiomarinetti/fmarinetti.docker-secured)
 
 Role Name
 =========
