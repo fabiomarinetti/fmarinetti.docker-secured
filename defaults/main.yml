@@ -20,6 +20,9 @@ server_cert_file: server.crt
 # the name of the CA certificate file
 ca_cert_file: ca.crt
 #
+# state if secret files are taken locally or from vault
+use_vault: no
+#
 # ---------------------------------------------------
 # docker configuration section
 # ---------------------------------------------------
