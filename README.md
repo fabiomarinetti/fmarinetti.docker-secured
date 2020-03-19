@@ -1,9 +1,7 @@
 [![Build Status](https://travis-ci.com/fabiomarinetti/fmarinetti.docker-secured.svg?branch=master)](https://travis-ci.com/fabiomarinetti/fmarinetti.docker-secured)
 
-Role Name
+faminetti.docker-securd
 =========
-
-fmarinetti.docker-secured
 
 This role installs and expose securely the docker APIs
 
