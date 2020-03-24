@@ -31,7 +31,7 @@ install:
   - ansible-galaxy install nephelaiio.docker  
     
   # terraforming nodes
-  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform apply -var "ssh_user=${SSH_USER}" -var "ssh_pub_key_file=${HOME}/.ssh/id_rsa.pub" -var "ssh_key_file=${HOME}/.ssh/id_rsa" -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve && cd -
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform apply -var "ssh_user=${SSH_USER}" -var "ssh_pub_key_file=${HOME}/.ssh/id_rsa.pub" -var "ssh_key_file=${HOME}/.ssh/id_rsa" -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve && cd - &>/dev/null
 
 script:
   - molecule --version
