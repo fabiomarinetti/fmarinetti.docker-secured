@@ -28,7 +28,7 @@ install:
   - ssh-keygen -P '' -f ${HOME}/.ssh/id_rsa -C ${SSH_USER}  
     
   # terraforming nodes
-  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform apply -var "ssh_user=${SSH_USER}" -var "ssh_pub_key_file=${HOME}/.ssh/id_rsa.pub" -var "ssh_key_file=${HOME}/.ssh/id_rsa" -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS} -auto-approve && cd -
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform apply -var "ssh_user=${SSH_USER}" -var "ssh_pub_key_file=${HOME}/.ssh/id_rsa.pub" -var "ssh_key_file=${HOME}/.ssh/id_rsa" -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve && cd -
 
 script:
   - molecule --version
@@ -37,4 +37,4 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/tests && ./run_role.sh
 
 after_script:
-  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform destroy -auto-approve
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform destroy -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve

@@ -3,3 +3,4 @@ terraform/.terraform
 tests/roles
 tests/inventory
 terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
