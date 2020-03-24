@@ -15,6 +15,9 @@ before_install:
   - unzip -d ${HOME}/bin terraform_${TF_VERSION}_linux_amd64.zip
   - cd ${TRAVIS_BUILD_DIR}/terraform && terraform init && cd -
 
+  # install role prerequisites
+  - ansible-galaxy install nephelaiio.docker  
+
 services:
   - docker
 install:
