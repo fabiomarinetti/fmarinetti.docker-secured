@@ -13,7 +13,7 @@ before_install:
   - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
   - mkdir -p ${HOME}/bin  
   - unzip -d ${HOME}/bin terraform_${TF_VERSION}_linux_amd64.zip
-  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform init terraform && cd -
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform init && cd -
 
 services:
   - docker
@@ -37,4 +37,4 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/tests && ./run_role.sh
 
 after_script:
-  - terraform destroy -auto-approve
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform destroy -auto-approve
