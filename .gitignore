@@ -1,0 +1,5 @@
+secret.json
+terraform/.terraform
+tests/roles
+tests/inventory
+terraform/terraform.tfstate
