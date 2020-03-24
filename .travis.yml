@@ -3,7 +3,7 @@ language: python
 python:
   - "3.6"
 env:
-  - PATH=$PATH:$HOME/bin GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json GCE_PROJECT_ID=ansible-swarm-271617 TF_VERSION=0.12.24 SSH_USER=mpisellonio
+  - PATH=$PATH:$HOME/bin GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json GCE_PROJECT_ID=ansible-swarm-271617 TF_VERSION=0.12.24 SSH_USER=mpisellonio ROLE_NAME=fmarinetti.docker-secured
     
 before_install:
   # decrypt service-account-key   
@@ -34,7 +34,7 @@ script:
   - molecule --version
   - ansible --version
   - molecule lint
-  - cd ${TRAVIS_BUILD_DIR}/tests && ./run_role.sh
+  - cd ${TRAVIS_BUILD_DIR}/tests && ./run_role.sh ${ROLE_NAME}
 
 after_script:
   - cd ${TRAVIS_BUILD_DIR}/terraform && terraform destroy -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve
