@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: instance1
+  become: yes
   roles:
     - fmarinetti.docker-secured

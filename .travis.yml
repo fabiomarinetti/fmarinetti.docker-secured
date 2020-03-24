@@ -2,11 +2,39 @@
 language: python
 python:
   - "3.6"
+env:
+  - PATH=$PATH:$HOME/bin GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json GCE_PROJECT_ID=ansible-swarm-271617 TF_VERSION=0.12.24 SSH_USER=mpisellonio
+    
+before_install:
+  # decrypt service-account-key   
+  - openssl aes-256-cbc -K $encrypted_297aa543cc91_key -iv $encrypted_297aa543cc91_iv -in ${GOOGLE_APPLICATION_CREDENTIALS}.enc -out ${GOOGLE_APPLICATION_CREDENTIALS} -d
+
+  # install and initialize terraform CLI
+  - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+  - mkdir -p ${HOME}/bin  
+  - unzip -d ${HOME}/bin terraform_${TF_VERSION}_linux_amd64.zip
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform init terraform && cd -
+
 services:
   - docker
 install:
-  - pip install molecule docker ansible-lint flake8
+  # install molecule and docker      
+  - pip install molecule docker 
+
+  # install linting tools 
+  - pip install ansible-lint flake8
+  
+  # generate ssh key
+  - ssh-keygen -P '' -f ${HOME}/.ssh/id_rsa -C ${SSH_USER}  
+    
+  # terraforming nodes
+  - cd ${TRAVIS_BUILD_DIR}/terraform && terraform apply -var "ssh_user=${SSH_USER}" -var "ssh_pub_key_file=${HOME}/.ssh/id_rsa.pub" -var "ssh_key_file=${HOME}/.ssh/id_rsa" -auto-approve && cd -
+
 script:
   - molecule --version
   - ansible --version
-  - molecule test
+  - molecule lint
+  - cd ${TRAVIS_BUILD_DIR}/tests && ./run_role.sh
+
+after_script:
+  - terraform destroy -auto-approve
