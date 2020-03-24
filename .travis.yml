@@ -3,7 +3,7 @@ language: python
 python:
   - "3.6"
 env:
-  - PATH=$PATH:$HOME/bin GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json GCE_PROJECT_ID=ansible-swarm-271617 TF_VERSION=0.12.24 SSH_USER=mpisellonio ROLE_NAME=fmarinetti.docker-secured
+  - PATH=$PATH:$HOME/bin GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json GCE_PROJECT_ID=ansible-271617 TF_VERSION=0.12.24 SSH_USER=mpisellonio ROLE_NAME=fmarinetti.docker-secured
     
 before_install:
   # decrypt service-account-key   
@@ -15,9 +15,6 @@ before_install:
   - unzip -d ${HOME}/bin terraform_${TF_VERSION}_linux_amd64.zip
   - cd ${TRAVIS_BUILD_DIR}/terraform && terraform init && cd -
 
-  # install role prerequisites
-  - ansible-galaxy install nephelaiio.docker  
-
 services:
   - docker
 install:
@@ -25,10 +22,13 @@ install:
   - pip install molecule docker 
 
   # install linting tools 
-  - pip install ansible-lint flake8
+  - pip install ansible-lint flake8  
   
   # generate ssh key
   - ssh-keygen -P '' -f ${HOME}/.ssh/id_rsa -C ${SSH_USER}  
+
+  # install role prerequisites
+  - ansible-galaxy install nephelaiio.docker  
     
   # terraforming nodes
   - cd ${TRAVIS_BUILD_DIR}/terraform && terraform apply -var "ssh_user=${SSH_USER}" -var "ssh_pub_key_file=${HOME}/.ssh/id_rsa.pub" -var "ssh_key_file=${HOME}/.ssh/id_rsa" -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve && cd -
