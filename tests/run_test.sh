@@ -53,11 +53,15 @@ cp -r $BASEDIR/defaults \
 cd $BASEDIR/terraform && terraform output inventory > $BASEDIR/tests/inventory && cd - &>/dev/null
 [ $? -eq 0 ] || die "a problem occurred in generating inventory"
 
+# test connection through ansible
+ansible -m ping -i inventory all
+
 # test role execution and idempotency
 echo "run convergence test"
 py.test -v converge.py
 [ $? -eq 0 ] || die "one or more convergence tests failed"
 
+# run verification tests
 echo "run verification test"
 py.test -v --ansible-inventory=inventory --hosts='ansible://all' verify.py
 [ $? -eq 0 ] || die "one or more verification tests failed"
