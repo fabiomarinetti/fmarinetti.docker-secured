@@ -22,7 +22,7 @@ install:
   - pip install molecule docker 
 
   # install linting tools 
-  - pip install ansible-lint flake8  
+  - pip install ansible-lint flake8 testinfra 
   
   # generate ssh key
   - ssh-keygen -P '' -f ${HOME}/.ssh/id_rsa -C ${SSH_USER}  
@@ -36,6 +36,7 @@ install:
 script:
   - molecule --version
   - ansible --version
+  - py.test --version  
   - molecule lint
   - cd ${TRAVIS_BUILD_DIR}/tests && ./run_test.sh ${ROLE_NAME}
 
