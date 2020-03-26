@@ -1,8 +1,5 @@
 import os
-import ssl
-import OpenSSL
 
-TEST_PLAYBOOK = 'test.yml'
 
 def get_port(host):
     if 'docker_port' in host.ansible.get_variables():
@@ -10,8 +7,7 @@ def get_port(host):
     else:
         port = (os.getenv('DOCKER_PORT') or '2375')
     return str(port)
-#def test_idempotency(host):
-#    host.run_expected([0], 'ansible-playbook -i inventory ' + TEST_PLAYBOOK)
+
 
 def test_package(host):
     if host.system_info.distribution == 'ubuntu':
@@ -21,13 +17,16 @@ def test_package(host):
     p = host.package(package_name)
     assert p.is_installed
 
+
 def test_service(host):
     docker = host.service("docker")
     assert docker.is_running
     assert docker.is_enabled
 
+
 def test_socket(host):
     assert host.socket('tcp://0.0.0.0:' + get_port(host)).is_listening
+
 
 def test_ssl(host):
     cmd_string = "openssl s_client -connect localhost:" + get_port(host) + " -showcerts </dev/null 2>/dev/null| sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | openssl x509 -noout -serial | cut -d '=' -f 2"
