@@ -4,3 +4,4 @@ tests/roles
 tests/inventory
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+tests/__pycache__

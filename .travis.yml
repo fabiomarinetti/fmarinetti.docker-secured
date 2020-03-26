@@ -37,7 +37,7 @@ script:
   - molecule --version
   - ansible --version
   - molecule lint
-  - cd ${TRAVIS_BUILD_DIR}/tests && ./run_role.sh ${ROLE_NAME}
+  - cd ${TRAVIS_BUILD_DIR}/tests && ./run_test.sh ${ROLE_NAME}
 
 after_script:
   - cd ${TRAVIS_BUILD_DIR}/terraform && terraform destroy -var "secret_key=${GOOGLE_APPLICATION_CREDENTIALS}" -auto-approve

@@ -1,5 +1,5 @@
 ---
-- hosts: instance1
+- hosts: all
   become: yes
   roles:
     - fmarinetti.docker-secured

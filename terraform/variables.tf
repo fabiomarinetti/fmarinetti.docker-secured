@@ -20,16 +20,36 @@ variable "zone" {
   default = "us-east1-c"
 }
 
-########## INSTANCE #########
+########## INSTANCES #########
 
-# the instance name
-variable "instance_name" {
-  default = "instance1"
+# the centos7 instance name
+variable "centos7_name" {
+  default = "abbeyroad"
 }
 
-# the image for the instance name
-variable "image" {
+# the centos7 image
+variable "centos7_image" {
   default = "centos-cloud/centos-7"
+}
+
+# the ubuntu bionic instance name
+variable "ubuntu1804_name" {
+  default = "revolver"
+}
+
+# the ubuntu bionic 18.04 lts image
+variable "ubuntu1804_image" {
+  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+# the ubuntu xenial instance name
+variable "ubuntu1604_name" {
+  default = "letitbe"
+}
+
+# the ubuntu xenial 16.04 lts image
+variable "ubuntu1604_image" {
+  default = "ubuntu-os-cloud/ubuntu-1604-lts"
 }
 
 # the instance type
