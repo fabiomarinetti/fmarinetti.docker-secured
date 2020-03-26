@@ -55,6 +55,7 @@ cd $BASEDIR/terraform && terraform output inventory > $BASEDIR/tests/inventory &
 
 # test connection through ansible
 ansible -m ping -i inventory all
+[ $? -eq 0 ] || die "one or more machine can't be connected"
 
 # test role execution and idempotency
 echo "run convergence test"

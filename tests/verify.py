@@ -29,10 +29,10 @@ def test_socket(host):
 
 
 def test_ssl(host):
-    cmd_string = "openssl s_client -connect localhost:" + get_port(host) + 
-                " -showcerts </dev/null 2>/dev/null |" + 
-                " sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |" + 
-                " openssl x509 -noout -serial | cut -d '=' -f 2"
+    cmd_string = "openssl s_client -connect localhost:" + get_port(host)
+                 " -showcerts </dev/null 2>/dev/null |"
+                 " sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |"
+                 " openssl x509 -noout -serial | cut -d '=' -f 2"
     server_cert_serial = host.run(cmd_string).stdout.strip()
     cmd_string = 'openssl x509 -in ../files/server.crt -noout -serial | cut -d = -f 2'
     serial_from_file = os.popen(cmd_string).read().strip()
