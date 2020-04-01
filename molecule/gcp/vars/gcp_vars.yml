@@ -1,0 +1,13 @@
+ip_cidr_range: 172.16.0.0/28
+region: us-east1
+zone: us-east1-c
+instance_name: ansible-instance
+network_name: ansible-network
+subnet_name: ansible-subnet
+firewall_name: ansible-firewall
+size_gb: 200
+machine_type: f1-micro
+ssh_user: mpisellonio
+ssh_pub_key_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+gcp_project_id: default
+gcp_service_account_key: "{{ lookup('env', 'HOME') }}/secret.json"

@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: delegated
+  gcp_service_account_key: "../../secret.json"
+  gcp_project_id: ansible-272015
+  region: us-east1
+  zone: us-east1-c
+  ssh_user: mpisellonio
+  ssh_pub_key_file: "../../.ssh/id_rsa.pub"
+  ssh_key_file: "../../.ssh/id_rsa"
+  network_name: ansible-network 
+  subnet_name: ansible-subnet
+  firewall_name: ansible-firewall
+  ip_cidr_range: 172.16.0.0/28
+
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
+
+platforms:
+  - name: node-centos7-1
+    image_family: projects/centos-cloud/global/images/family/centos-7
+    machine_type: f1-micro
+    size_gb: 200
+    groups:
+      - centos
+  - name: node-ubuntu-bionic-1
+    image_family: projects/ubuntu-os-cloud/global/images/family/ubuntu-1804-lts
+    machine_type: f1-micro
+    size_gb: 200
+    groups:
+      - ubuntu
+  - name:  node-ubuntu-xenial-1
+    image_family: projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+    machine_type: f1-micro
+    size_gb: 200
+    groups:
+      - ubuntu
+
+provisioner:
+  name: ansible
+
+verifier:
+  name: ansible

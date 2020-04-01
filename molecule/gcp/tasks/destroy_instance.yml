@@ -1,0 +1,12 @@
+- name: "delete instance {{ item.name }}"
+  gcp_compute_instance:
+    name: "{{ item.name }}"
+    zone: "{{ molecule_yml.driver.zone }}"
+    state: absent
+  register: instance
+
+- name: delete address
+  gcp_compute_address:
+    name: "{{ item.name }}"
+    region: "{{ molecule_yml.driver.region }}"
+    state: absent

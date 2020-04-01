@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+      when: "'ubuntu' is in group_names"
+      
+    - name: "Include docker-secured"
+      include_role:
+        name: "docker-secured"

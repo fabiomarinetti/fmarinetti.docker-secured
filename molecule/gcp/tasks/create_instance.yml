@@ -1,0 +1,58 @@
+---
+# tasks/create_instance.yml
+#
+# create the ip address and disk for the instance
+# and the instance itself
+
+- set_fact:
+    instance_created: 
+      instances: []
+  when: instance_created is not defined
+
+- name: create ip address
+  gcp_compute_address:
+    name: "{{ item.name }}"
+    region: "{{ molecule_yml.driver.region }}"
+    state: present
+  register: address
+
+- name: create disk
+  gcp_compute_disk:
+    name: "{{ item.name }}"
+    size_gb: "{{ item.size_gb }}"
+    source_image: "{{ item.image_family }}"
+    zone: "{{ molecule_yml.driver.zone }}"
+    state: present
+  register: disk
+
+- name: "create instance {{ item.name }}"
+  gcp_compute_instance:
+    state: present
+    name: "{{ item.name }}"
+    machine_type: "{{ item.machine_type }}"
+    disks:
+    - auto_delete: true
+      boot: true
+      source: "{{ disk }}"
+    network_interfaces:
+    - network: "{{ network }}"
+      subnetwork: "{{ subnet }}"
+      access_configs:
+      - name: External NAT
+        nat_ip: "{{ address }}"
+        type: ONE_TO_ONE_NAT
+    zone: "{{ molecule_yml.driver.zone }}"
+    metadata: 
+      ssh-keys : "{{ molecule_yml.driver.ssh_user }}:{{ lookup('file', molecule_yml.driver.ssh_pub_key_file) }}\n"
+    scheduling:
+      on_host_maintenance: TERMINATE
+      preemptible: yes
+    tags:
+      items:
+        - ansibleinventory
+  register: instance
+
+- set_fact:
+    instance_created:
+      changed: instance.changed | bool
+      instances: "{{ instance_created.instances + [ instance ] }}"
