@@ -45,9 +45,9 @@
     zone: "{{ molecule_yml.driver.zone }}"
     metadata:
       ssh-keys: "{{ molecule_yml.driver.ssh_user }}:{{ lookup('file', molecule_yml.driver.ssh_pub_key_file) }}\n"
-    scheduling:
-      on_host_maintenance: TERMINATE
-      preemptible: yes
+#    scheduling:
+#      on_host_maintenance: TERMINATE
+#      preemptible: yes
     tags:
       items:
         - ansibleinventory
