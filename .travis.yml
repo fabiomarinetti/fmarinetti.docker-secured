@@ -4,7 +4,7 @@ python:
   - "3.6"
 
 env:
-  - GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json SSH_USER=mpisellonio SSH_ID_FILE=$TRAVIS_BUILD_DIR/.ssh/id_rsa
+  - GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json SSH_USER=mpisellonio SSH_ID_FILE=$TRAVIS_BUILD_DIR/.ssh/id_rsa SCENARIO=gcp
 
 before_install:
   # decrypt service-account-key
@@ -26,4 +26,4 @@ install:
 script:
   - molecule --version
   - ansible --version
-  - molecule test
+  - molecule test --scenario-name=${SCENARIO}
