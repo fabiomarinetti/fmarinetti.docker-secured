@@ -13,6 +13,9 @@ before_install:
 install:
   # install molecule and docker
   - pip install molecule ansible-lint flake8
+ 
+  # create .ssh dir
+  - mkdir -p .ssh
 
   # generate ssh key
   - ssh-keygen -P '' -f ${SSH_ID_FILE} -C ${SSH_USER}
