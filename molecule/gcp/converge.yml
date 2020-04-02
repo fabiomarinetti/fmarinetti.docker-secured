@@ -5,4 +5,4 @@
   tasks:
     - name: "Include docker-secured"
       include_role:
-        name: "docker-secured"
+        name: "fmarinetti.docker-secured"
