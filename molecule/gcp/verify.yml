@@ -1,0 +1,49 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: no
+  vars:
+    docker_port: 2375
+  tasks:
+
+  # test package is installed
+  - name: populate package facts
+    package_facts:
+      manager: "auto"
+  - name: test docker-ce is installed
+    assert:
+      that: "'docker-ce' in ansible_facts.packages"
+
+  # test service is running
+  - name: populate service facts
+    service_facts:
+  - name: test docker service exists and is running
+    assert:
+      that:
+        - "ansible_facts.services['docker.service'] is defined"
+        - "ansible_facts.services['docker.service'].state == 'running'"
+
+  # test port is open
+  - name: "wait for port {{ docker_port }} being open"
+    wait_for:
+      host: localhost
+      port: "{{ docker_port | int }}"
+      timeout: 10
+    register: port_open
+    ignore_errors: yes
+  - name: assert port is open
+    assert:
+      that: not port_open.failed
+
+  # test connection is ssl only
+  - name: send curl http request to docker
+    command: "curl http://localhost:{{ docker_port }}"
+    args:
+      warn: no
+    register: curl_output
+    changed_when: curl_output.rc == 0
+  - name: assert request must be in ssl
+    assert:
+      that: "'HTTPS server' in curl_output.stdout"

@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Include docker-secured"
+      include_role:
+        name: "fmarinetti.docker-secured"

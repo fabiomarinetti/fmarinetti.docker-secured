@@ -1,0 +1,22 @@
+- name: delete a firewall
+  gcp_compute_firewall:
+    name: "{{ molecule_yml.driver.firewall_name }}"
+    state: absent
+
+- name: register the existing network
+  gcp_compute_network:
+    name: "{{ molecule_yml.driver.network_name }}"
+  register: network
+
+- name: delete a subnetwork
+  gcp_compute_subnetwork:
+    name: "{{ molecule_yml.driver.subnet_name }}"
+    region: "{{ molecule_yml.driver.region }}"
+    network: "{{ network }}"
+    ip_cidr_range: "{{ molecule_yml.driver.ip_cidr_range }}"
+    state: absent
+
+- name: delete a network
+  gcp_compute_network:
+    name: "{{ molecule_yml.driver.network_name }}"
+    state: absent

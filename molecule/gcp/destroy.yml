@@ -1,0 +1,28 @@
+---
+- name: Destroy
+  hosts: localhost
+  connection: local
+  gather_facts: false
+#  no_log: "{{ molecule_no_log }}"
+  module_defaults:
+    group/gcp:
+      project: "{{ molecule_yml.driver.gcp_project_id }}"
+      auth_kind: serviceaccount
+      service_account_file: "{{ molecule_yml.driver.gcp_service_account_key }}"
+  tasks:
+    - name: destroy instance
+      include_tasks: tasks/destroy_instance.yml
+      loop: "{{ molecule_yml.platforms }}"
+
+    - name: destroy network resources
+      include_tasks: tasks/destroy_network.yml
+
+    - name: Populate instance config
+      set_fact:
+        instance_conf: {}
+
+    - name: Dump instance config
+      copy:
+        content: "{{ instance_conf | to_json | from_json | molecule_to_yaml | molecule_header }}"
+        dest: "{{ molecule_instance_config }}"
+      when: instance.changed | bool
