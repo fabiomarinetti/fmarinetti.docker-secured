@@ -39,19 +39,19 @@ lint: |
   flake8
 
 platforms:
-  - name: node-centos7-1
+  - name: "ds-centos7-${TRAVIS_BUILD_ID}"
     image_family: projects/centos-cloud/global/images/family/centos-7
     machine_type: n1-standard-1
     size_gb: 200
     groups:
       - centos
-  - name: node-ubuntu-bionic-1
+  - name: "ds-ubuntu-bionic-${TRAVIS_BUILD_ID}"
     image_family: projects/ubuntu-os-cloud/global/images/family/ubuntu-1804-lts
     machine_type: n1-standard-1
     size_gb: 200
     groups:
       - ubuntu
-  - name:  node-ubuntu-xenial-1
+  - name:  "ds-ubuntu-xenial-${TRAVIS_BUILD_ID}"
     image_family: projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
     machine_type: n1-standard-1
     size_gb: 200
