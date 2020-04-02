@@ -19,13 +19,13 @@ dependency:
 
 driver:
   name: delegated
-  gcp_service_account_key: "../../secret.json"
+  gcp_service_account_key: ${GOOGLE_APPLICATION_CREDENTIALS}
   gcp_project_id: ansible-272015
   region: us-east1
   zone: us-east1-c
-  ssh_user: mpisellonio
-  ssh_pub_key_file: "../../.ssh/id_rsa.pub"
-  ssh_key_file: "../../.ssh/id_rsa"
+  ssh_user: ${SSH_USER}
+  ssh_pub_key_file: "${SSH_ID_FILE}.pub"
+  ssh_key_file: "${SSH_ID_FILE}"
   network_name: ansible-network
   subnet_name: ansible-subnet
   firewall_name: ansible-firewall

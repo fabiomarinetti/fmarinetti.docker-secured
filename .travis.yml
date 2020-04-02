@@ -4,7 +4,7 @@ python:
   - "3.6"
 
 env:
-  - GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json
+  - GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json SSH_USER=mpisellonio SSH_ID_FILE=$TRAVIS_BUILD_DIR/.ssh/id_rsa
 
 before_install:
   # decrypt service-account-key
@@ -15,7 +15,7 @@ install:
   - pip install molecule ansible-lint flake8
 
   # generate ssh key
-  - ssh-keygen -P '' -f ${HOME}/.ssh/id_rsa -C ${SSH_USER}
+  - ssh-keygen -P '' -f ${SSH_ID_FILE} -C ${SSH_USER}
 
   # install role prerequisites
 #  - ansible-galaxy install nephelaiio.docker
