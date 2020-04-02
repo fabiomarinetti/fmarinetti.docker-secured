@@ -20,4 +20,3 @@
   gcp_compute_network:
     name: "{{ molecule_yml.driver.network_name }}"
     state: absent
-

@@ -1,7 +1,7 @@
 ---
 # tasks/create_network.yml
 #
-# create network in gcp project, a subnet and 
+# create network in gcp project, a subnet and
 # a firewall rule for port 22
 
 - name: "create network {{ molecule_yml.driver.network_name }}"

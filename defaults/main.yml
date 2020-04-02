@@ -3,7 +3,7 @@
 #
 # ---------------------------------------------------
 # ssl section:
-# see https://docs.docker.com/engine/security/https/ 
+# see https://docs.docker.com/engine/security/https/
 # ---------------------------------------------------
 #                                                                                                                       # the directory where ssl secret key are placed
 key_dir: /etc/ssl/private

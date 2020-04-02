@@ -4,8 +4,9 @@
 # create the ip address and disk for the instance
 # and the instance itself
 
-- set_fact:
-    instance_created: 
+- name: initialize instance facts
+  set_fact:
+    instance_created:
       instances: []
   when: instance_created is not defined
 
@@ -42,8 +43,8 @@
         nat_ip: "{{ address }}"
         type: ONE_TO_ONE_NAT
     zone: "{{ molecule_yml.driver.zone }}"
-    metadata: 
-      ssh-keys : "{{ molecule_yml.driver.ssh_user }}:{{ lookup('file', molecule_yml.driver.ssh_pub_key_file) }}\n"
+    metadata:
+      ssh-keys: "{{ molecule_yml.driver.ssh_user }}:{{ lookup('file', molecule_yml.driver.ssh_pub_key_file) }}\n"
     scheduling:
       on_host_maintenance: TERMINATE
       preemptible: yes
@@ -52,7 +53,14 @@
         - ansibleinventory
   register: instance
 
-- set_fact:
+- name: update instance facts
+  set_fact:
     instance_created:
       changed: instance.changed | bool
       instances: "{{ instance_created.instances + [ instance ] }}"
+
+- name: wait for sshd to come up on {{ item.name }}
+  wait_for:
+    host: "{{ instance.networkInterfaces[0].accessConfigs[0].natIP }}"
+    port: 22
+    timeout: 90
