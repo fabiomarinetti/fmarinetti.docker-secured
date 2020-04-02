@@ -3,6 +3,9 @@ language: python
 python:
   - "3.6"
 
+env:
+  - GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/secret.json
+
 before_install:
   # decrypt service-account-key
   - openssl aes-256-cbc -K $encrypted_297aa543cc91_key -iv $encrypted_297aa543cc91_iv -in ${GOOGLE_APPLICATION_CREDENTIALS}.enc -out ${GOOGLE_APPLICATION_CREDENTIALS} -d
